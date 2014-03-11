@@ -135,6 +135,8 @@ public class KeyguardViewManager {
     private Bitmap mBlurredImage = null;
     private int mLastRotation = 0;
 
+    private int mBlurRadius = 14;
+
     private KeyguardUpdateMonitorCallback mUpdateMonitorCallback = new KeyguardUpdateMonitorCallback() {
         @Override
         public void onSetBackground(Bitmap bmp) {
@@ -249,7 +251,11 @@ public class KeyguardViewManager {
 
     public void setBackgroundBitmap(Bitmap bmp) {
         if (bmp != null) {
-            mBlurredImage = blurBitmap(bmp, bmp.getWidth() < 900 ? 14: 18);
+            if (mBlurRadius > 0) {
+                mBlurredImage = blurBitmap(bmp, mBlurRadius);
+            } else {
+                mBlurredImage = bmp;
+            }
         } else {
             mBlurredImage = null;
         }
